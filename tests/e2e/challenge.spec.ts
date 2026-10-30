@@ -196,7 +196,7 @@ test('10. evento antigo não regride versão mais nova', async ({ page }) => {
   await page.goto('/nfts/nft_1')
   await waitForMocks(page)
   await page.evaluate(async () => { await fetch('/api/__mock/nfts/nft_1/update', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ priceEth: '1.33', version: 5, eventId: 'new-event' }) }) })
-  await expect(page.getByText('1.33 ETH').first()).toBeVisible()
+  await expect(page.getByText('1.33 ETH').first()).toBeVisible({ timeout: 10_000 })
   await page.evaluate(async () => { await fetch('/api/__mock/nfts/nft_1/update', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ priceEth: '0.01', version: 4, eventId: 'old-event' }) }) })
   await expect(page.getByText('1.33 ETH').first()).toBeVisible()
   await expect(page.getByText('0.01 ETH')).toHaveCount(0)

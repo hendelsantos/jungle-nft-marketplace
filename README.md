@@ -122,11 +122,11 @@ TanStack Query usa chaves por identidade, parâmetros estáveis, cancelamento co
 
 O projeto gera uma SPA estática em `dist/`. `vercel.json` configura fallback de rotas diretas. O build demonstrativo não depende de serviço privado e mantém MSW e Socket.IO simulados ativos.
 
-O código-fonte é versionado na branch `main`. Deploy público continua condicionado à autorização do proprietário e à validação de `npm run build`, Playwright e Lighthouse no mesmo commit.
+O código-fonte é versionado na branch `main`. As validações de `npm run build`, Playwright (12 grupos E2E) e Lighthouse (3 medições por página/perfil, medianas em `docs/LIGHTHOUSE.md`) foram concluídas. Deploy público continua condicionado à autorização do proprietário.
 
 ## Limitações conhecidas desta sessão
 
 - O arquivo Figma oficial não pôde ser aberto: o host de automação do navegador estava indisponível e a leitura pública do link falhou. O sistema visual atual é provisório e não é apresentado como inspeção fiel do Figma.
-- Instalação de dependências concluída em 2026-10-30 com `npm install --legacy-peer-deps` (o npm 10.8 falha com `Cannot read properties of null (reading 'edgesOut')` nesta árvore de dependências). Typecheck estrito, lint com zero avisos, testes unitários e build Vite 8 foram aprovados no mesmo ambiente. Playwright e Lighthouse seguem pendentes.
+- Instalação de dependências concluída em 2026-10-30 com `npm install --legacy-peer-deps` (o npm 10.8 falha com `Cannot read properties of null (reading 'edgesOut')` nesta árvore de dependências). Typecheck estrito, lint com zero avisos, testes unitários, build Vite 8, os 12 grupos E2E (26 testes em desktop e mobile) e três medições Lighthouse por página/perfil (`docs/LIGHTHOUSE.md`) foram aprovados no mesmo ambiente.
 - O diretório `.git/` fornecido pelo ambiente de automação estava vazio e somente leitura; os metadados Git foram mantidos em diretório isolado, com commit e push reais verificados na branch `main`.
 - Baselines visuais e relatórios de auditoria só devem ser adicionados depois de execução real; arquivos falsos não foram criados.

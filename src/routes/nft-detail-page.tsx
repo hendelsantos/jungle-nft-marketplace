@@ -24,7 +24,24 @@ export function NftDetailPage() {
   const nft = query.data
   const selected = useMemo(() => nft?.editions.find((edition) => edition.id === editionId) ?? nft?.editions.find((edition) => edition.available > 0) ?? nft?.editions[0], [editionId, nft])
   const active = favorites.data?.nftIds.includes(nft?.id ?? '') ?? false
-  if (query.isLoading) return <div className="page-shell grid gap-8 py-10 lg:grid-cols-2"><Skeleton className="aspect-[4/4.6]" /><div className="space-y-5 pt-4"><Skeleton className="h-4 w-28" /><Skeleton className="h-14 w-4/5" /><Skeleton className="h-24 w-full" /><Skeleton className="h-32 w-full" /></div></div>
+  if (query.isLoading) return (
+    <div className="page-shell py-8 sm:py-12" aria-busy="true" aria-label="Carregando NFT">
+      <nav aria-hidden="true" className="mb-6 text-sm"><Skeleton className="h-4 w-40" /></nav>
+      <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-14">
+        <div className="surface overflow-hidden"><Skeleton className="aspect-[4/4.6] w-full rounded-none" /></div>
+        <section className="lg:py-4">
+          <Skeleton className="h-4 w-24" />
+          <Skeleton className="mt-3 h-12 w-4/5" />
+          <Skeleton className="mt-3 h-4 w-44" />
+          <Skeleton className="mt-6 h-20 w-full" />
+          <div className="mt-8"><Skeleton className="h-4 w-32" /><div className="mt-3 grid gap-3 sm:grid-cols-2"><Skeleton className="h-[4.75rem]" /><Skeleton className="h-[4.75rem]" /></div></div>
+          <Skeleton className="mt-6 h-24 w-full" />
+          <div className="mt-5 flex gap-3"><Skeleton className="h-11 flex-1 rounded-full" /><Skeleton className="size-11 rounded-full" /></div>
+          <div className="mt-10"><Skeleton className="h-5 w-28" /><div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3"><Skeleton className="h-20" /><Skeleton className="h-20" /><Skeleton className="h-20" /></div></div>
+        </section>
+      </div>
+    </div>
+  )
   if (query.isError || !nft) return <div className="page-shell py-16"><ErrorState title="NFT não encontrado" message={query.error?.message ?? 'Este item não existe.'} /><Link to="/" className="mx-auto mt-6 block w-fit text-sm font-bold text-accent">Voltar ao marketplace</Link></div>
   return (
     <div className="page-shell py-8 sm:py-12">
