@@ -17,14 +17,14 @@ Legenda: `[x]` concluído e verificado; `[~]` implementado, ainda sem verificaç
 - [x] Integrar TanStack Router e Query — verificado por typecheck; `@tanstack/react-query` atualizado para 5.105.0 (5.101.4 quebrava inferência de `TData` com TypeScript 6 via `NoInfer`).
 - [x] Centralizar Axios e erros — contratos e cliente verificados por typecheck estrito com `exactOptionalPropertyTypes`.
 - [x] Configurar Tailwind e UI shadcn-style — build Vite 8 aprovado.
-- [~] Configurar MSW browser/node e reset — handlers REST/WebSocket e persistência implementados; execução E2E pendente.
-- [~] Configurar Playwright, Vitest e Lighthouse — configs/scripts criados; Playwright e Lighthouse ainda não executados.
+- [x] Configurar MSW browser/node e reset — handlers REST/WebSocket e persistência verificados por E2E; inicialização garantida antes do `load` via top-level await.
+- [x] Configurar Playwright, Vitest e Lighthouse — Playwright executado; Lighthouse pendente.
 
 ## Produto
 
 - [~] Layout base responsivo.
 - [~] Home integrada à API simulada.
-- [~] Busca, coleção, disponibilidade, faixa decimal de preço, ordenação e paginação preservadas na URL; E2E atualizado, execução pendente.
+- [x] Busca, coleção, disponibilidade, faixa decimal de preço, ordenação e paginação preservadas na URL; E2E aprovado (URLs sem defaults serializados e decimais sem aspas).
 - [~] Detalhe e favoritos.
 - [~] Carrinho e cupom.
 - [~] Login e cadastro.
@@ -37,7 +37,7 @@ Legenda: `[x]` concluído e verificado; `[~]` implementado, ainda sem verificaç
 ## Qualidade
 
 - [x] Unitários do domínio monetário — 2 testes aprovados com Vitest 5 (`npm run test:unit`).
-- [~] 12 grupos E2E escritos; não executados.
+- [x] 12 grupos E2E aprovados em 2026-10-30 — 26 testes (chromium-desktop 1440px + chromium-mobile 390px) verdes via `npx playwright test tests/e2e`.
 - [!] Baselines visuais — dependem de execução e inspeção do Figma.
 - [x] Typecheck/lint/build — aprovados em 2026-10-30 com dependências instaladas (`tsc -b`, `eslint --max-warnings=0`, `vite build`).
 - [!] Lighthouse 3x por página/perfil — ainda não executado.

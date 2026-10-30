@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { addFirstNftToCart, login, resetApp } from '../fixtures/app'
+import { addFirstNftToCart, login, resetApp, waitForMocks } from '../fixtures/app'
 
 test.beforeEach(async ({ page }) => { await resetApp(page) })
 
@@ -61,6 +61,7 @@ test('3. cadastro, login, expiração e logout', async ({ page }) => {
   await expect(page).toHaveURL(/\/$/)
   if ((page.viewportSize()?.width ?? 1440) < 640) await page.getByRole('button', { name: 'Abrir menu' }).click()
   await page.getByRole('button', { name: /Sair/ }).click()
+  await expect(page.getByRole('link', { name: 'Entrar' })).toBeVisible()
   await page.goto('/register')
   await page.getByLabel('Nome').fill('Duplicada')
   await page.getByLabel('E-mail').fill(email)
@@ -116,6 +117,7 @@ test('6. compra completa só exibe recibo confirmado', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Aguardando confirmação' })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Sua coleção ficou mais selvagem.' })).toBeVisible({ timeout: 10_000 })
   await expect(page.getByText('snapshot imutável')).toBeVisible()
+  await waitForMocks(page)
   await page.evaluate(async () => { await fetch('/api/__mock/nfts/nft_1/update', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ priceEth: '9.99', version: 20 }) }) })
   await expect(page.getByText(/1 × 0.84 ETH/)).toBeVisible()
   await expect(page.getByText(/9.99 ETH/)).toHaveCount(0)
@@ -155,7 +157,7 @@ test('8. perfil, senha e carteira validam e persistem', async ({ page }) => {
   await page.reload()
   await expect(page.getByLabel('Nome')).toHaveValue('Ana Atualizada')
   await page.getByLabel('Senha atual').fill('errada')
-  await page.getByLabel('Nova senha').fill('NovaSenha#2026')
+  await page.getByLabel('Nova senha', { exact: true }).fill('NovaSenha#2026')
   await page.getByLabel('Confirmar nova senha').fill('NovaSenha#2026')
   await page.getByRole('button', { name: 'Alterar senha' }).click()
   await expect(page.getByText('senha atual está incorreta')).toBeVisible()
@@ -182,8 +184,9 @@ test('9. preço muda via Socket.IO durante checkout e exige nova revisão', asyn
   await page.getByRole('button', { name: 'Conectar simulação' }).click()
   await page.getByRole('button', { name: 'Revisar pedido' }).click()
   await expect(page.getByRole('button', { name: 'Confirmar compra' })).toBeVisible()
+  await waitForMocks(page)
   await page.evaluate(async () => { await fetch('/api/__mock/nfts/nft_1/update', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ priceEth: '1.11', version: 2 }) }) })
-  await expect(page.getByText('1.11 ETH')).toBeVisible({ timeout: 10_000 })
+  await expect(page.getByText('1.11 ETH').first()).toBeVisible({ timeout: 10_000 })
   await expect(page.getByRole('button', { name: 'Confirmar compra' })).toHaveCount(0)
   await page.getByRole('button', { name: 'Revisar pedido' }).click()
   await expect(page.getByRole('button', { name: 'Confirmar compra' })).toBeVisible()
@@ -191,19 +194,21 @@ test('9. preço muda via Socket.IO durante checkout e exige nova revisão', asyn
 
 test('10. evento antigo não regride versão mais nova', async ({ page }) => {
   await page.goto('/nfts/nft_1')
+  await waitForMocks(page)
   await page.evaluate(async () => { await fetch('/api/__mock/nfts/nft_1/update', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ priceEth: '1.33', version: 5, eventId: 'new-event' }) }) })
-  await expect(page.getByText('1.33 ETH')).toBeVisible()
+  await expect(page.getByText('1.33 ETH').first()).toBeVisible()
   await page.evaluate(async () => { await fetch('/api/__mock/nfts/nft_1/update', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ priceEth: '0.01', version: 4, eventId: 'old-event' }) }) })
-  await expect(page.getByText('1.33 ETH')).toBeVisible()
+  await expect(page.getByText('1.33 ETH').first()).toBeVisible()
   await expect(page.getByText('0.01 ETH')).toHaveCount(0)
   await page.context().setOffline(true)
   await page.context().setOffline(false)
   await page.evaluate(async () => { await fetch('/api/__mock/nfts/nft_1/update', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ priceEth: '1.44', version: 6, eventId: 'after-reconnect' }) }) })
-  await expect(page.getByText('1.44 ETH')).toBeVisible({ timeout: 10_000 })
+  await expect(page.getByText('1.44 ETH').first()).toBeVisible({ timeout: 10_000 })
 })
 
 test('11. teclado, foco visível e validação nativa', async ({ page }) => {
   await page.goto('/')
+  await expect(page.getByRole('link', { name: 'Pular para o conteúdo' })).toBeVisible()
   await page.keyboard.press('Tab')
   await expect(page.getByRole('link', { name: 'Pular para o conteúdo' })).toBeFocused()
   await page.getByRole('link', { name: 'Pular para o conteúdo' }).press('Enter')

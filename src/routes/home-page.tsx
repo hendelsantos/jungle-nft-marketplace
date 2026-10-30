@@ -17,15 +17,15 @@ export function HomePage() {
   const search = useSearch({ from: '/' })
   const navigate = useNavigate({ from: '/' })
   const [term, setTerm] = useState(search.q ?? '')
-  const [minPrice, setMinPrice] = useState(search.minPrice ?? '')
-  const [maxPrice, setMaxPrice] = useState(search.maxPrice ?? '')
+  const [minPrice, setMinPrice] = useState(search.minPrice !== undefined ? String(search.minPrice) : '')
+  const [maxPrice, setMaxPrice] = useState(search.maxPrice !== undefined ? String(search.maxPrice) : '')
   const [priceError, setPriceError] = useState<string>()
   const [trackedSearch, setTrackedSearch] = useState({ q: search.q, minPrice: search.minPrice, maxPrice: search.maxPrice })
   if (search.q !== trackedSearch.q || search.minPrice !== trackedSearch.minPrice || search.maxPrice !== trackedSearch.maxPrice) {
     setTrackedSearch({ q: search.q, minPrice: search.minPrice, maxPrice: search.maxPrice })
     setTerm(search.q ?? '')
-    setMinPrice(search.minPrice ?? '')
-    setMaxPrice(search.maxPrice ?? '')
+    setMinPrice(search.minPrice !== undefined ? String(search.minPrice) : '')
+    setMaxPrice(search.maxPrice !== undefined ? String(search.maxPrice) : '')
   }
   const currentPage = search.page ?? 1
   const currentSort = search.sort ?? 'featured'
@@ -33,14 +33,14 @@ export function HomePage() {
     ...(search.q ? { q: search.q } : {}),
     ...(search.collection ? { collections: [search.collection] } : {}),
     ...(search.availability ? { availability: search.availability } : {}),
-    ...(search.minPrice ? { minPrice: search.minPrice } : {}),
-    ...(search.maxPrice ? { maxPrice: search.maxPrice } : {}),
+    ...(search.minPrice !== undefined ? { minPrice: String(search.minPrice) } : {}),
+    ...(search.maxPrice !== undefined ? { maxPrice: String(search.maxPrice) } : {}),
     sort: currentSort,
     page: currentPage,
     pageSize: 6,
   }
   const query = useNfts(params)
-  const setSearch = (patch: Partial<HomeSearch>, resetPage = true) => void navigate({ search: (previous) => ({ ...previous, ...patch, ...(resetPage ? { page: 1 } : {}) }) })
+  const setSearch = (patch: Partial<HomeSearch>, resetPage = true) => void navigate({ search: (previous: Partial<HomeSearch>) => ({ ...previous, ...patch, ...(resetPage && (previous.page ?? 1) > 1 ? { page: 1 } : {}) }) })
   const applySearchAndPrice = () => {
     const nextMinPrice = minPrice.trim()
     const nextMaxPrice = maxPrice.trim()
@@ -49,7 +49,11 @@ export function HomePage() {
       return
     }
     setPriceError(undefined)
-    setSearch({ q: term.trim() || undefined, minPrice: nextMinPrice || undefined, maxPrice: nextMaxPrice || undefined })
+    setSearch({
+      q: term.trim() || undefined,
+      minPrice: nextMinPrice ? Number(nextMinPrice) : undefined,
+      maxPrice: nextMaxPrice ? Number(nextMaxPrice) : undefined,
+    })
   }
   return (
     <div>
@@ -77,7 +81,7 @@ export function HomePage() {
         {query.isLoading ? <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Carregando NFTs">{Array.from({ length: 6 }, (_, index) => <div className="surface overflow-hidden" key={index}><Skeleton className="aspect-[4/4.6] rounded-none" /><div className="space-y-3 p-5"><Skeleton className="h-3 w-24" /><Skeleton className="h-6 w-3/4" /><Skeleton className="mt-6 h-5 w-28" /></div></div>)}</div> : null}
         {query.isError ? <ErrorState message={query.error.message} onRetry={() => void query.refetch()} /> : null}
         {query.data && query.data.items.length ? <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">{query.data.items.map((nft) => <NftCard key={nft.id} nft={nft} />)}</div> : null}
-        {query.data && !query.data.items.length ? <div className="surface grid min-h-64 place-items-center p-8 text-center"><div><Search className="mx-auto mb-4 size-9 text-muted" /><h3 className="text-xl font-bold">Nada encontrado</h3><p className="mt-2 text-muted">Tente uma busca mais ampla ou limpe os filtros.</p><Button className="mt-5" onClick={() => void navigate({ search: { sort: 'featured', page: 1 } })}>Limpar filtros</Button></div></div> : null}
+        {query.data && !query.data.items.length ? <div className="surface grid min-h-64 place-items-center p-8 text-center"><div><Search className="mx-auto mb-4 size-9 text-muted" /><h3 className="text-xl font-bold">Nada encontrado</h3><p className="mt-2 text-muted">Tente uma busca mais ampla ou limpe os filtros.</p><Button className="mt-5" onClick={() => void navigate({ search: {} })}>Limpar filtros</Button></div></div> : null}
         {query.data && query.data.meta.totalPages > 1 ? <nav aria-label="Paginação" className="mt-10 flex items-center justify-center gap-3"><Button variant="secondary" disabled={currentPage <= 1} onClick={() => setSearch({ page: currentPage - 1 }, false)}>Anterior</Button><span className="text-sm text-muted">Página {currentPage} de {query.data.meta.totalPages}</span><Button variant="secondary" disabled={currentPage >= query.data.meta.totalPages} onClick={() => setSearch({ page: currentPage + 1 }, false)}>Próxima</Button></nav> : null}
       </section>
     </div>

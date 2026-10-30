@@ -68,7 +68,9 @@ export const orderHandlers = [
     db.orders.push(order)
     db.idempotency.push({ key, userId: session.user.id, payload, orderId: order.id })
     writeDb(db)
-    setTimeout(() => settleOrder(order.id, declined), 900)
+    // O settle acontece via GET /api/orders/:id (polling do cliente) para não
+    // limpar o carrinho nem invalidar a cotação enquanto a criação ainda está
+    // pendente no cliente (cenário order-timeout).
     if (scenarioOf(request) === 'order-timeout') {
       await delay(15_000)
       return HttpResponse.json(order, { status: 201 })
