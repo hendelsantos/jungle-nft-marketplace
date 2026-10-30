@@ -20,6 +20,15 @@ export async function waitForMocks(page: Page) {
   await page.waitForFunction(() => navigator.serviceWorker.controller !== null, undefined, { timeout: 10_000 })
 }
 
+/**
+ * Aguarda o canal Socket.IO estar conectado (marcado em
+ * `document.documentElement.dataset.realtime` pelo RealtimeProvider) antes de
+ * disparar atualizações de preço, evitando perder o evento.
+ */
+export async function waitForRealtime(page: Page) {
+  await page.waitForFunction(() => document.documentElement.dataset.realtime === 'connected', undefined, { timeout: 10_000 })
+}
+
 export async function login(page: Page, email = 'ana@jungle.demo', password = 'Jungle#2026') {
   await page.goto('/login')
   await page.getByLabel('E-mail').fill(email)

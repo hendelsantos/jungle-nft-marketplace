@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { addFirstNftToCart, login, resetApp, waitForMocks } from '../fixtures/app'
+import { addFirstNftToCart, login, resetApp, waitForMocks, waitForRealtime } from '../fixtures/app'
 
 test.beforeEach(async ({ page }) => { await resetApp(page) })
 
@@ -184,7 +184,7 @@ test('9. preço muda via Socket.IO durante checkout e exige nova revisão', asyn
   await page.getByRole('button', { name: 'Conectar simulação' }).click()
   await page.getByRole('button', { name: 'Revisar pedido' }).click()
   await expect(page.getByRole('button', { name: 'Confirmar compra' })).toBeVisible()
-  await waitForMocks(page)
+  await waitForRealtime(page)
   await page.evaluate(async () => { await fetch('/api/__mock/nfts/nft_1/update', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ priceEth: '1.11', version: 2 }) }) })
   await expect(page.getByText('1.11 ETH').first()).toBeVisible({ timeout: 10_000 })
   await expect(page.getByRole('button', { name: 'Confirmar compra' })).toHaveCount(0)
@@ -194,7 +194,7 @@ test('9. preço muda via Socket.IO durante checkout e exige nova revisão', asyn
 
 test('10. evento antigo não regride versão mais nova', async ({ page }) => {
   await page.goto('/nfts/nft_1')
-  await waitForMocks(page)
+  await waitForRealtime(page)
   await page.evaluate(async () => { await fetch('/api/__mock/nfts/nft_1/update', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ priceEth: '1.33', version: 5, eventId: 'new-event' }) }) })
   await expect(page.getByText('1.33 ETH').first()).toBeVisible({ timeout: 10_000 })
   await page.evaluate(async () => { await fetch('/api/__mock/nfts/nft_1/update', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ priceEth: '0.01', version: 4, eventId: 'old-event' }) }) })

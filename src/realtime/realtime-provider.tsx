@@ -3,29 +3,18 @@ import { useQueryClient } from '@tanstack/react-query'
 import type { Nft, Order, RealtimeEnvelope } from '@/api/contracts'
 import { queryKeys } from '@/api/query-keys'
 import { useAuth } from '@/features/auth/auth-context'
-
-const MAX_SEEN = 300
+import { createEventGate } from '@/realtime/event-gate'
 
 export function RealtimeProvider({ children }: PropsWithChildren) {
   const { session } = useAuth()
   const client = useQueryClient()
-  const seen = useRef(new Set<string>())
-  const versions = useRef(new Map<string, number>())
+  const gate = useRef(createEventGate())
 
   useEffect(() => {
     let disposed = false
     let disconnect: (() => void) | undefined
-    const seenIds = seen.current
-    const resourceVersions = versions.current
-    const accept = (event: RealtimeEnvelope<unknown>) => {
-      if (seenIds.has(event.eventId)) return false
-      const known = resourceVersions.get(event.resourceId) ?? 0
-      if (event.version <= known) return false
-      seenIds.add(event.eventId)
-      resourceVersions.set(event.resourceId, event.version)
-      if (seenIds.size > MAX_SEEN) seenIds.delete(seenIds.values().next().value ?? '')
-      return true
-    }
+    const eventGate = gate.current
+    const accept = (event: RealtimeEnvelope<unknown>) => eventGate.accept(event)
 
     void import('socket.io-client').then(({ io }) => {
       if (disposed) return
@@ -33,6 +22,7 @@ export function RealtimeProvider({ children }: PropsWithChildren) {
       const socket = io(endpoint.origin, { path: endpoint.pathname, transports: ['websocket'], reconnection: true })
       disconnect = () => socket.disconnect()
       socket.on('connect', () => {
+        document.documentElement.dataset.realtime = 'connected'
         if (session) socket.emit('session.join', session.id)
         void client.invalidateQueries({ queryKey: queryKeys.nfts.all })
         if (session) {
@@ -40,6 +30,7 @@ export function RealtimeProvider({ children }: PropsWithChildren) {
           void client.invalidateQueries({ queryKey: queryKeys.cart(session.user.id) })
         }
       })
+      socket.on('disconnect', () => { document.documentElement.dataset.realtime = 'disconnected' })
       socket.on('nft.updated', (event: RealtimeEnvelope<Nft>) => {
         if (!accept(event)) return
         void client.invalidateQueries({ queryKey: queryKeys.nfts.all })
@@ -56,8 +47,8 @@ export function RealtimeProvider({ children }: PropsWithChildren) {
     return () => {
       disposed = true
       disconnect?.()
-      seenIds.clear()
-      resourceVersions.clear()
+      eventGate.reset()
+      delete document.documentElement.dataset.realtime
     }
   }, [client, session])
 

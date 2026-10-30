@@ -36,12 +36,12 @@ Legenda: `[x]` concluído e verificado; `[~]` implementado, ainda sem verificaç
 
 ## Qualidade
 
-- [x] Unitários do domínio monetário — 2 testes aprovados com Vitest 5 (`npm run test:unit`).
+- [x] Unitários — 12 testes aprovados com Vitest 5: domínio monetário, porta de eventos realtime (dedupe/versões) e parser de busca da Home.
 - [x] 12 grupos E2E aprovados em 2026-10-30 — 26 testes (chromium-desktop 1440px + chromium-mobile 390px) verdes via `npx playwright test tests/e2e`.
 - [~] Baselines visuais — dependem de inspeção do Figma; fluxo de captura pronto (`npm run test:visual:update`).
 - [x] Typecheck/lint/build — aprovados em 2026-10-30 com dependências instaladas (`tsc -b`, `eslint --max-warnings=0`, `vite build`).
 - [x] Lighthouse 3x por página/perfil — executado em 2026-10-30; medianas em `docs/LIGHTHOUSE.md` (A11y/BP/SEO 100; performance 91/100/89/100; CLS ≤ 0,009).
 - [x] Verificação sintática de todos os `.ts/.tsx` — `SYNTAX_CHECK_OK` com TypeScript 6.0.3 do cache local.
-- [ ] Relatório final de cobertura.
+- [x] Relatório final de cobertura — `docs/COVERAGE.md` com execuções, cobertura por camada e lacunas declaradas.
 - [x] Git inicializado por diretório de metadados isolado; primeiro commit e branch `main` publicados no GitHub.
 - [!] Deploy — depende de autorização explícita do usuário.

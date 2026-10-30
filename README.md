@@ -115,6 +115,8 @@ Nos testes, o banco também pode ser resetado por `POST /api/__mock/reset`.
 - [Contratos REST](docs/REST_API.md)
 - [Eventos Socket.IO](docs/REALTIME.md)
 - [Testes e cenários](docs/TESTING.md)
+- [Auditoria Lighthouse](docs/LIGHTHOUSE.md)
+- [Relatório final de cobertura](docs/COVERAGE.md)
 
 TanStack Query usa chaves por identidade, parâmetros estáveis, cancelamento com `AbortSignal`, retries apenas para GETs transitórios e mutation otimista de favoritos com rollback. Logout limpa o cache e desmonta o socket. Valores ETH são strings e todos os cálculos passam por `decimal.js`.
 

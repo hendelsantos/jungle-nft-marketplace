@@ -23,7 +23,7 @@ interface RealtimeEnvelope<T> {
 - `nft.updated`: payload `Nft`; invalida catálogo, detalhe, carrinho e cotação.
 - `order.updated`: payload `Order`; exige `userId` da sessão atual e nunca regride um estado terminal.
 
-O cliente mantém até 300 IDs vistos e a maior versão por recurso. Duplicatas e versões antigas são descartadas. Em todo `connect`, inclusive reconexão, recursos ativos são reconciliados pela API REST. Logout desmonta o provider e desconecta o socket.
+O cliente mantém até 300 IDs vistos e a maior versão por recurso (lógica isolada e testada em `src/realtime/event-gate.ts`). Duplicatas e versões antigas são descartadas. Em todo `connect`, inclusive reconexão, recursos ativos são reconciliados pela API REST. O estado da conexão é publicado em `document.documentElement.dataset.realtime` (`connected`/`disconnected`) para depuração e para os testes aguardarem o canal antes de disparar atualizações. Logout desmonta o provider e desconecta o socket.
 
 ## Limitações reais
 
