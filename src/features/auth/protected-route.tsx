@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react'
 import { Navigate, useRouterState } from '@tanstack/react-router'
 import { LoaderCircle } from 'lucide-react'
-import { useAuth } from './auth-provider'
+import { useAuth } from './auth-context'
 
 export function ProtectedRoute({ children }: PropsWithChildren) {
   const { session, loading } = useAuth()

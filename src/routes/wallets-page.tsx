@@ -8,8 +8,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select } from '@/components/ui/select'
 import { InlineMessage } from '@/components/feedback/inline-message'
-import { useAuth } from '@/features/auth/auth-provider'
+import { useAuth } from '@/features/auth/auth-context'
 import { shortAddress } from '@/lib/utils'
+import { field } from '@/lib/form'
 
 export function WalletsPage() {
   const { session } = useAuth()
@@ -31,9 +32,9 @@ export function WalletsPage() {
     event.preventDefault()
     const form = new FormData(event.currentTarget)
     create.mutate({
-      label: String(form.get('label')),
-      address: String(form.get('address')),
-      network: String(form.get('network')) as Network,
+      label: field(form, 'label'),
+      address: field(form, 'address'),
+      network: field(form, 'network') as Network,
       primary: form.get('primary') === 'on',
     } satisfies WalletInput)
   }
@@ -41,7 +42,7 @@ export function WalletsPage() {
   const submitEdit = (event: FormEvent<HTMLFormElement>, wallet: Wallet) => {
     event.preventDefault()
     const form = new FormData(event.currentTarget)
-    update.mutate({ id: wallet.id, input: { label: String(form.get('label')), address: String(form.get('address')), network: String(form.get('network')) as Network } })
+    update.mutate({ id: wallet.id, input: { label: field(form, 'label'), address: field(form, 'address'), network: field(form, 'network') as Network } })
   }
 
   return (

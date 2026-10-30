@@ -68,7 +68,7 @@ export const authHandlers = [
     return HttpResponse.json(session)
   }),
 
-  http.post('/api/auth/logout', async ({ request }) => {
+  http.post('/api/auth/logout', ({ request }) => {
     const db = readDb()
     const session = getSession(db, request)
     if (session) db.sessions = db.sessions.filter((candidate) => candidate.id !== session.id)

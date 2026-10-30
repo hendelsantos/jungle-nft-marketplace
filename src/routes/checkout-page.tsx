@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
+import { useMemo, useState, type FormEvent } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { CheckCircle2, LoaderCircle, ShieldCheck, WalletCards } from 'lucide-react'
@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input'
 import { Select } from '@/components/ui/select'
 import { Skeleton } from '@/components/ui/skeleton'
 import { InlineMessage } from '@/components/feedback/inline-message'
-import { useAuth } from '@/features/auth/auth-provider'
+import { useAuth } from '@/features/auth/auth-context'
 import { formatEth } from '@/lib/money'
 import { shortAddress } from '@/lib/utils'
 
@@ -20,15 +20,15 @@ export function CheckoutPage() {
   const wallets = useQuery({ queryKey: queryKeys.wallets(userId), queryFn: ({ signal }) => walletsApi.list(signal) })
   const [network, setNetwork] = useState<Network>('ethereum'); const [walletId, setWalletId] = useState(''); const [reviewedQuoteId, setReviewedQuoteId] = useState(''); const [collector, setCollector] = useState({ fullName: session?.user.name ?? '', email: session?.user.email ?? '', country: 'Brasil' })
   const [quoteChanged, setQuoteChanged] = useState(false)
-  const previousQuoteId = useRef<string | undefined>(undefined)
   const compatible = useMemo(() => wallets.data?.filter((wallet) => wallet.network === network) ?? [], [network, wallets.data])
   const selectedWallet = compatible.find((wallet) => wallet.id === walletId) ?? compatible.find((wallet) => wallet.primary) ?? compatible[0]
-  useEffect(() => { if (selectedWallet && selectedWallet.id !== walletId) setWalletId(selectedWallet.id) }, [selectedWallet, walletId])
-  useEffect(() => {
-    if (quote.data?.id && previousQuoteId.current && previousQuoteId.current !== quote.data.id) setQuoteChanged(true)
-    if (quote.data?.id) previousQuoteId.current = quote.data.id
+  const currentQuoteId = quote.data?.id
+  const [trackedQuoteId, setTrackedQuoteId] = useState<string | undefined>(currentQuoteId)
+  if (currentQuoteId !== trackedQuoteId) {
+    setTrackedQuoteId(currentQuoteId)
+    if (trackedQuoteId) setQuoteChanged(true)
     setReviewedQuoteId('')
-  }, [quote.data?.id])
+  }
   const connect = useMutation({ mutationFn: ({ id, connected }: { id: string; connected: boolean }) => walletsApi.update(id, { connected }), onSuccess: () => client.invalidateQueries({ queryKey: queryKeys.wallets(userId) }) })
   const create = useMutation({
     mutationFn: async () => {

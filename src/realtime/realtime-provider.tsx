@@ -2,7 +2,7 @@ import { useEffect, useRef, type PropsWithChildren } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import type { Nft, Order, RealtimeEnvelope } from '@/api/contracts'
 import { queryKeys } from '@/api/query-keys'
-import { useAuth } from '@/features/auth/auth-provider'
+import { useAuth } from '@/features/auth/auth-context'
 
 const MAX_SEEN = 300
 
@@ -15,13 +15,15 @@ export function RealtimeProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     let disposed = false
     let disconnect: (() => void) | undefined
+    const seenIds = seen.current
+    const resourceVersions = versions.current
     const accept = (event: RealtimeEnvelope<unknown>) => {
-      if (seen.current.has(event.eventId)) return false
-      const known = versions.current.get(event.resourceId) ?? 0
+      if (seenIds.has(event.eventId)) return false
+      const known = resourceVersions.get(event.resourceId) ?? 0
       if (event.version <= known) return false
-      seen.current.add(event.eventId)
-      versions.current.set(event.resourceId, event.version)
-      if (seen.current.size > MAX_SEEN) seen.current.delete(seen.current.values().next().value ?? '')
+      seenIds.add(event.eventId)
+      resourceVersions.set(event.resourceId, event.version)
+      if (seenIds.size > MAX_SEEN) seenIds.delete(seenIds.values().next().value ?? '')
       return true
     }
 
@@ -54,8 +56,8 @@ export function RealtimeProvider({ children }: PropsWithChildren) {
     return () => {
       disposed = true
       disconnect?.()
-      seen.current.clear()
-      versions.current.clear()
+      seenIds.clear()
+      resourceVersions.clear()
     }
   }, [client, session])
 

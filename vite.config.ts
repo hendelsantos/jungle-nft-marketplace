@@ -13,9 +13,11 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          react: ['react', 'react-dom', '@tanstack/react-router'],
-          data: ['@tanstack/react-query', 'axios', 'decimal.js'],
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('@tanstack/react-router')) return 'react'
+            if (id.includes('@tanstack/react-query') || id.includes('axios') || id.includes('decimal.js')) return 'data'
+          }
         },
       },
     },

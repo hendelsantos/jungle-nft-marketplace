@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import { InlineMessage } from '@/components/feedback/inline-message'
 import { ErrorState } from '@/components/feedback/error-state'
-import { useAuth } from '@/features/auth/auth-provider'
+import { useAuth } from '@/features/auth/auth-context'
 import { useCart, useCartActions } from '@/features/cart/queries'
 import { addEth, formatEth, multiplyEth, percentOfEth, subtractEth } from '@/lib/money'
 

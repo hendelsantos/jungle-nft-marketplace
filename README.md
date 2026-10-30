@@ -122,11 +122,11 @@ TanStack Query usa chaves por identidade, parâmetros estáveis, cancelamento co
 
 O projeto gera uma SPA estática em `dist/`. `vercel.json` configura fallback de rotas diretas. O build demonstrativo não depende de serviço privado e mantém MSW e Socket.IO simulados ativos.
 
-Nenhum deploy ou push remoto foi realizado. A publicação deve acontecer somente após autorização do proprietário e validação de `npm run build`, Playwright e Lighthouse no mesmo commit.
+O código-fonte é versionado na branch `main`. Deploy público continua condicionado à autorização do proprietário e à validação de `npm run build`, Playwright e Lighthouse no mesmo commit.
 
 ## Limitações conhecidas desta sessão
 
 - O arquivo Figma oficial não pôde ser aberto: o host de automação do navegador estava indisponível e a leitura pública do link falhou. O sistema visual atual é provisório e não é apresentado como inspeção fiel do Figma.
-- O `curl` conseguiu alcançar o registry ao final, mas o processo Node/npm continuou falhando com `EAI_AGAIN`; o modo offline confirmou ausência do pacote `@mswjs/socket.io-binding` no cache. Por isso não houve instalação, lockfile, build, Playwright, screenshots nem Lighthouse nesta sessão. A verificação de sintaxe TypeScript foi executada com o compilador 6.0.3 já presente no cache local; isso não substitui typecheck completo.
-- O diretório `.git/` fornecido pelo ambiente estava vazio e somente leitura, impedindo commits. Nenhum histórico foi inventado.
+- Instalação de dependências concluída em 2026-10-30 com `npm install --legacy-peer-deps` (o npm 10.8 falha com `Cannot read properties of null (reading 'edgesOut')` nesta árvore de dependências). Typecheck estrito, lint com zero avisos, testes unitários e build Vite 8 foram aprovados no mesmo ambiente. Playwright e Lighthouse seguem pendentes.
+- O diretório `.git/` fornecido pelo ambiente de automação estava vazio e somente leitura; os metadados Git foram mantidos em diretório isolado, com commit e push reais verificados na branch `main`.
 - Baselines visuais e relatórios de auditoria só devem ser adicionados depois de execução real; arquivos falsos não foram criados.

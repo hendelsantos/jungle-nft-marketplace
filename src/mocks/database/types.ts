@@ -1,10 +1,10 @@
-import type { Cart, Order, Session, Wallet } from '@/api/contracts'
+import type { Cart, Order, Quote, Session, Wallet } from '@/api/contracts'
 import type { Nft } from '@/api/contracts/nft'
 import type { MockUser } from '@/mocks/fixtures/users'
 
 export interface StoredQuote {
   userId: string
-  quote: import('@/api/contracts').Quote
+  quote: Quote
 }
 
 export interface IdempotencyRecord {

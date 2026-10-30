@@ -1,18 +1,9 @@
-import { createContext, useContext, useEffect, type PropsWithChildren } from 'react'
+import { useEffect, type PropsWithChildren } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { LoginInput, RegisterInput, Session } from '@/api/contracts'
 import { authApi } from '@/api/client/api'
 import { queryKeys } from '@/api/query-keys'
-
-interface AuthContextValue {
-  session: Session | null
-  loading: boolean
-  login: (input: LoginInput) => Promise<Session>
-  register: (input: RegisterInput) => Promise<Session>
-  logout: () => Promise<void>
-}
-
-const AuthContext = createContext<AuthContextValue | null>(null)
+import { AuthContext } from '@/features/auth/auth-context'
 
 function ensureAnonymousCartId() {
   let id = localStorage.getItem('jungle:anonymous-cart-id')
@@ -51,7 +42,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const registerMutation = useMutation({ mutationFn: (input: RegisterInput) => establish(authApi.register({ ...input, anonymousCartId: ensureAnonymousCartId() })) })
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
-    onSettled: async () => {
+    onSettled: () => {
       localStorage.removeItem('jungle:session-id')
       client.clear()
     },
@@ -68,10 +59,4 @@ export function AuthProvider({ children }: PropsWithChildren) {
       {children}
     </AuthContext.Provider>
   )
-}
-
-export function useAuth() {
-  const value = useContext(AuthContext)
-  if (!value) throw new Error('useAuth must be used inside AuthProvider')
-  return value
 }

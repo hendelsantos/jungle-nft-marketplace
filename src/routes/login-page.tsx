@@ -3,17 +3,18 @@ import { useState, type FormEvent } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { InlineMessage } from '@/components/feedback/inline-message'
-import { useAuth } from '@/features/auth/auth-provider'
+import { useAuth } from '@/features/auth/auth-context'
+import { field } from '@/lib/form'
 
 export function LoginPage() {
   const { login } = useAuth()
-  const search = useSearch({ strict: false }) as { redirect?: string }
+  const search = useSearch({ from: '/login' })
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault(); setBusy(true); setError('')
     const form = new FormData(event.currentTarget)
-    try { await login({ email: String(form.get('email')), password: String(form.get('password')) }); window.location.assign(search.redirect ?? '/') }
+    try { await login({ email: field(form, 'email'), password: field(form, 'password') }); window.location.assign(search.redirect ?? '/') }
     catch (reason) { setError(reason instanceof Error ? reason.message : 'Não foi possível entrar.') }
     finally { setBusy(false) }
   }

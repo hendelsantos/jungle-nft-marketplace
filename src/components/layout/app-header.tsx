@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Heart, Menu, ShoppingBag, UserRound, X } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/features/auth/auth-provider'
+import { useAuth } from '@/features/auth/auth-context'
 import { useCart } from '@/features/cart/queries'
 
 const nav = [

@@ -21,5 +21,3 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ className, v
   <button ref={ref} className={cn(buttonVariants({ variant, size }), className)} {...props} />
 ))
 Button.displayName = 'Button'
-
-export { buttonVariants }

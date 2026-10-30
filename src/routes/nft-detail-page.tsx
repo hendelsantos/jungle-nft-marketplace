@@ -6,14 +6,14 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { ErrorState } from '@/components/feedback/error-state'
 import { InlineMessage } from '@/components/feedback/inline-message'
 import { useNft } from '@/features/catalog/queries'
-import { useAuth } from '@/features/auth/auth-provider'
+import { useAuth } from '@/features/auth/auth-context'
 import { useCartActions } from '@/features/cart/queries'
 import { useFavorites, useToggleFavorite } from '@/features/favorites/queries'
 import { formatEth } from '@/lib/money'
 import { cn } from '@/lib/utils'
 
 export function NftDetailPage() {
-  const { nftId } = useParams({ strict: false }) as { nftId: string }
+  const { nftId } = useParams({ from: '/nfts/$nftId' })
   const query = useNft(nftId)
   const { session } = useAuth()
   const favorites = useFavorites()

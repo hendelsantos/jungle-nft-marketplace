@@ -5,12 +5,12 @@ import { ordersApi } from '@/api/client/api'
 import { queryKeys } from '@/api/query-keys'
 import { ErrorState } from '@/components/feedback/error-state'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useAuth } from '@/features/auth/auth-provider'
+import { useAuth } from '@/features/auth/auth-context'
 import { formatEth } from '@/lib/money'
 import { formatDate, shortAddress } from '@/lib/utils'
 
 export function OrderPage() {
-  const { orderId } = useParams({ strict: false }) as { orderId: string }; const { session } = useAuth(); const userId = session?.user.id ?? ''
+  const { orderId } = useParams({ from: '/orders/$orderId' }); const { session } = useAuth(); const userId = session?.user.id ?? ''
   const query = useQuery({ queryKey: queryKeys.order(userId, orderId), queryFn: ({ signal }) => ordersApi.get(orderId, signal), refetchInterval: (state) => state.state.data?.status === 'pending' ? 1500 : false, staleTime: 1_000, retry: false })
   if (query.isLoading) return <div className="page-shell py-12"><Skeleton className="mx-auto h-[34rem] max-w-3xl" /></div>
   if (query.isError || !query.data) return <div className="page-shell py-12"><ErrorState title="Pedido indisponível" message={query.error?.message ?? 'Não foi possível recuperar este pedido.'} onRetry={() => void query.refetch()} /></div>

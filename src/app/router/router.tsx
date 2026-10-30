@@ -5,7 +5,8 @@ import { ProtectedRoute } from '@/features/auth/protected-route'
 import { CartPage } from '@/routes/cart-page'
 import { CheckoutPage } from '@/routes/checkout-page'
 import { FavoritesPage } from '@/routes/favorites-page'
-import { HomePage, parseHomeSearch } from '@/routes/home-page'
+import { HomePage } from '@/routes/home-page'
+import { parseHomeSearch } from '@/routes/home-search'
 import { LoginPage } from '@/routes/login-page'
 import { NftDetailPage } from '@/routes/nft-detail-page'
 import { NotFoundPage } from '@/routes/not-found-page'
@@ -20,7 +21,7 @@ const nftRoute = createRoute({ getParentRoute: () => rootRoute, path: '/nfts/$nf
 const cartRoute = createRoute({ getParentRoute: () => rootRoute, path: '/cart', component: CartPage })
 const loginRoute = createRoute({ getParentRoute: () => rootRoute, path: '/login', validateSearch: (search: Record<string, unknown>) => typeof search.redirect === 'string' ? { redirect: search.redirect } : {}, component: LoginPage })
 const registerRoute = createRoute({ getParentRoute: () => rootRoute, path: '/register', validateSearch: (search: Record<string, unknown>) => typeof search.redirect === 'string' ? { redirect: search.redirect } : {}, component: RegisterPage })
-const protectedComponent = (Component: () => JSX.Element) => () => <ProtectedRoute><Component /></ProtectedRoute>
+const protectedComponent = (Component: () => JSX.Element | null) => () => <ProtectedRoute><Component /></ProtectedRoute>
 const favoritesRoute = createRoute({ getParentRoute: () => rootRoute, path: '/favorites', component: protectedComponent(FavoritesPage) })
 const checkoutRoute = createRoute({ getParentRoute: () => rootRoute, path: '/checkout', component: protectedComponent(CheckoutPage) })
 const orderRoute = createRoute({ getParentRoute: () => rootRoute, path: '/orders/$orderId', component: protectedComponent(OrderPage) })

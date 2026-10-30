@@ -13,18 +13,18 @@ Legenda: `[x]` concluído e verificado; `[~]` implementado, ainda sem verificaç
 
 ## Fundação
 
-- [~] Criar Vite + React + TypeScript estrito — scaffold e configs criados; instalação bloqueada.
-- [~] Integrar TanStack Router e Query — rotas, providers, chaves e cache implementados; typecheck pendente.
-- [~] Centralizar Axios e erros — contratos e cliente implementados; execução pendente.
-- [~] Configurar Tailwind e UI shadcn-style — tema e componentes locais implementados; build pendente.
-- [~] Configurar MSW browser/node e reset — handlers REST/WebSocket e persistência implementados; execução pendente.
-- [~] Configurar Playwright, Vitest e Lighthouse — configs/scripts criados; dependências indisponíveis.
-- [!] Instalar dependências — npm falha com `EAI_AGAIN`; offline para em `@mswjs/socket.io-binding` não armazenado no cache.
+- [x] Criar Vite + React + TypeScript estrito — dependências instaladas com `npm install --legacy-peer-deps` (bug do Arborist do npm 10 com esta árvore de dependências).
+- [x] Integrar TanStack Router e Query — verificado por typecheck; `@tanstack/react-query` atualizado para 5.105.0 (5.101.4 quebrava inferência de `TData` com TypeScript 6 via `NoInfer`).
+- [x] Centralizar Axios e erros — contratos e cliente verificados por typecheck estrito com `exactOptionalPropertyTypes`.
+- [x] Configurar Tailwind e UI shadcn-style — build Vite 8 aprovado.
+- [~] Configurar MSW browser/node e reset — handlers REST/WebSocket e persistência implementados; execução E2E pendente.
+- [~] Configurar Playwright, Vitest e Lighthouse — configs/scripts criados; Playwright e Lighthouse ainda não executados.
 
 ## Produto
 
 - [~] Layout base responsivo.
 - [~] Home integrada à API simulada.
+- [~] Busca, coleção, disponibilidade, faixa decimal de preço, ordenação e paginação preservadas na URL; E2E atualizado, execução pendente.
 - [~] Detalhe e favoritos.
 - [~] Carrinho e cupom.
 - [~] Login e cadastro.
@@ -36,12 +36,12 @@ Legenda: `[x]` concluído e verificado; `[~]` implementado, ainda sem verificaç
 
 ## Qualidade
 
-- [~] Unitários do domínio monetário escritos; o módulo real foi transpilado e executado com `decimal.js` 10.6.0 (`MONEY_DOMAIN_CHECK_OK`), mas o runner Vitest segue bloqueado.
+- [x] Unitários do domínio monetário — 2 testes aprovados com Vitest 5 (`npm run test:unit`).
 - [~] 12 grupos E2E escritos; não executados.
 - [!] Baselines visuais — dependem de execução e inspeção do Figma.
-- [!] Typecheck/lint/build — dependências não puderam ser instaladas.
-- [!] Lighthouse 3x por página/perfil — build/browser indisponíveis.
+- [x] Typecheck/lint/build — aprovados em 2026-10-30 com dependências instaladas (`tsc -b`, `eslint --max-warnings=0`, `vite build`).
+- [!] Lighthouse 3x por página/perfil — ainda não executado.
 - [x] Verificação sintática de todos os `.ts/.tsx` — `SYNTAX_CHECK_OK` com TypeScript 6.0.3 do cache local.
 - [ ] Relatório final de cobertura.
-- [!] Commits — `.git/` vazio e somente leitura nesta sessão.
+- [x] Git inicializado por diretório de metadados isolado; primeiro commit e branch `main` publicados no GitHub.
 - [!] Deploy — depende de autorização explícita do usuário.

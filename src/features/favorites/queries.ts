@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { FavoriteResponse } from '@/api/contracts'
 import { favoritesApi } from '@/api/client/api'
 import { queryKeys } from '@/api/query-keys'
-import { useAuth } from '@/features/auth/auth-provider'
+import { useAuth } from '@/features/auth/auth-context'
 
 export function useFavorites() {
   const { session } = useAuth()

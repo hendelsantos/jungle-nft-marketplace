@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { cartApi } from '@/api/client/api'
 import type { AddCartItemInput } from '@/api/contracts'
 import { queryKeys } from '@/api/query-keys'
-import { useAuth } from '@/features/auth/auth-provider'
+import { useAuth } from '@/features/auth/auth-context'
 
 export function useCart() {
   const { session } = useAuth()
