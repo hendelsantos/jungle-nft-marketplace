@@ -18,21 +18,21 @@ Legenda: `[x]` concluído e verificado; `[~]` implementado, ainda sem verificaç
 - [x] Centralizar Axios e erros — contratos e cliente verificados por typecheck estrito com `exactOptionalPropertyTypes`.
 - [x] Configurar Tailwind e UI shadcn-style — build Vite 8 aprovado.
 - [x] Configurar MSW browser/node e reset — handlers REST/WebSocket e persistência verificados por E2E; inicialização garantida antes do `load` via top-level await.
-- [x] Configurar Playwright, Vitest e Lighthouse — Playwright executado; Lighthouse pendente.
+- [x] Configurar Playwright, Vitest e Lighthouse — todos executados e aprovados (ver Qualidade).
 
 ## Produto
 
-- [~] Layout base responsivo.
-- [~] Home integrada à API simulada.
+- [x] Layout base responsivo — E2E em 390/1440 px; baseline 768 px pendente com o Figma.
+- [x] Home integrada à API simulada — E2E grupo 1.
 - [x] Busca, coleção, disponibilidade, faixa decimal de preço, ordenação e paginação preservadas na URL; E2E aprovado (URLs sem defaults serializados e decimais sem aspas).
-- [~] Detalhe e favoritos.
-- [~] Carrinho e cupom.
-- [~] Login e cadastro.
-- [~] Perfil e senha.
-- [~] Carteiras.
-- [~] Checkout idempotente.
-- [~] Pedido/recibo.
-- [~] Realtime Socket.IO.
+- [x] Detalhe e favoritos — E2E grupos 2 e 4.
+- [x] Carrinho e cupom — E2E grupos 5 e 6.
+- [x] Login e cadastro — E2E grupo 3.
+- [x] Perfil e senha — E2E grupo 8.
+- [x] Carteiras — E2E grupo 8.
+- [x] Checkout idempotente — E2E grupos 6, 7, 7b e 9.
+- [x] Pedido/recibo — E2E grupo 6 (recibo imutável) e 7.
+- [x] Realtime Socket.IO — E2E grupos 9 e 10, incluindo reconexão offline/online.
 
 ## Qualidade
 
