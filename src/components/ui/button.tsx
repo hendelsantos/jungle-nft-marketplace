@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 const buttonVariants = cva('inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-50', {
   variants: {
     variant: {
-      primary: 'bg-accent text-canvas hover:bg-[#c8ff6b]',
+      primary: 'bg-accent text-canvas hover:bg-[#eb9862]',
       secondary: 'border bg-panel-raised text-ink hover:border-accent/60',
       ghost: 'text-ink hover:bg-white/10',
       danger: 'bg-red-500/15 text-red-200 hover:bg-red-500/25',

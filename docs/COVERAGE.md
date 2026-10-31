@@ -1,6 +1,6 @@
 # Relatório final de cobertura
 
-Data: 2026-10-30. Ambiente: Node 20.20, npm 10.8 (`--legacy-peer-deps`), Chromium via Playwright 1.63, build Vite 8.3.2 sobre `dist/` em `npm run preview`.
+Data: 2026-10-31. Ambiente: Node 20.20, npm 10.8 (`--legacy-peer-deps`), Chromium via Playwright 1.63, build Vite 8.3.2 sobre `dist/` em `npm run preview`.
 
 ## Execuções verificadas
 
@@ -22,11 +22,11 @@ Data: 2026-10-30. Ambiente: Node 20.20, npm 10.8 (`--legacy-peer-deps`), Chromiu
 
 ## Lacunas declaradas
 
-1. **Baselines visuais (R24)**: `tests/visual/pages.spec.ts` pronto, mas snapshots deliberadamente não criados — dependem de inspeção real do Figma, que segue inacessível. O sistema visual atual é provisório e documentado como desvio.
+1. **Baselines visuais (R24)**: `tests/visual/pages.spec.ts` pronto, mas snapshots deliberadamente não criados. A visão geral do Figma orientou a revisão da Home em 2026-10-31; a inspeção frame a frame segue inacessível e é necessária antes de aprovar baselines de Home, detalhe, carrinho e checkout.
 2. **Perfil 768 px (R21)**: E2E cobre 390 e 1440; 768 aparece nos breakpoints CSS e no snapshot pendente, sem asserção automatizada própria.
 3. **LCP mobile (~2,9–3,2 s)**: dominado pelo startup do service worker do MSW e pela primeira busca simulada; custo do modo demonstração, não existiria contra API real.
 4. **Testes de integração dedicados aos handlers (R13/R14)**: cobertos indiretamente por todos os fluxos E2E; não há suíte Vitest isolada por handler.
-5. **Deploy (R26)**: `vercel.json` com fallback SPA pronto; publicação aguarda autorização explícita do proprietário.
+5. **Deploy (R26)**: concluído no Railway em 2026-10-31; deployment em `SUCCESS` e smoke público aprovado para Home, rota direta, service worker MSW e assets.
 
 ## Cobertura de código
 

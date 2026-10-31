@@ -1,6 +1,6 @@
 # Tarefas e evidências
 
-Atualizado em: 2026-10-30.
+Atualizado em: 2026-10-31.
 
 Legenda: `[x]` concluído e verificado; `[~]` implementado, ainda sem verificação completa; `[ ]` pendente; `[!]` bloqueado.
 
@@ -8,7 +8,7 @@ Legenda: `[x]` concluído e verificado; `[~]` implementado, ainda sem verificaç
 
 - [x] Inspecionar diretório sem sobrescrever arquivos — estava vazio, sem Git válido.
 - [x] Ler README oficial integralmente — requisitos 1–12 cobertos em `REQUIREMENTS.md`.
-- [!] Inspecionar Figma — navegador e leitura pública indisponíveis nesta sessão.
+- [~] Inspecionar Figma — README oficial e miniatura pública do arquivo `Ff0SksUi7UFtPWUO8kyNtw` recuperados; visão geral comparada. A inspeção interativa por frame segue bloqueada pelo host/CloudFront.
 - [x] Registrar matriz, riscos e decisões arquiteturais.
 
 ## Fundação
@@ -22,7 +22,7 @@ Legenda: `[x]` concluído e verificado; `[~]` implementado, ainda sem verificaç
 
 ## Produto
 
-- [x] Layout base responsivo — E2E em 390/1440 px; baseline 768 px pendente com o Figma.
+- [x] Layout base responsivo — E2E em 390/1440 px; Home revisada em 2026-10-31 para a identidade marrom/laranja observada na visão geral oficial, com retratos originais otimizados; baseline 768 px pendente.
 - [x] Home integrada à API simulada — E2E grupo 1.
 - [x] Busca, coleção, disponibilidade, faixa decimal de preço, ordenação e paginação preservadas na URL; E2E aprovado (URLs sem defaults serializados e decimais sem aspas).
 - [x] Detalhe e favoritos — E2E grupos 2 e 4.
@@ -37,11 +37,12 @@ Legenda: `[x]` concluído e verificado; `[~]` implementado, ainda sem verificaç
 ## Qualidade
 
 - [x] Unitários — 12 testes aprovados com Vitest 5: domínio monetário, porta de eventos realtime (dedupe/versões) e parser de busca da Home.
-- [x] 12 grupos E2E aprovados em 2026-10-30 — 26 testes (chromium-desktop 1440px + chromium-mobile 390px) verdes via `npx playwright test tests/e2e`.
-- [~] Baselines visuais — dependem de inspeção do Figma; fluxo de captura pronto (`npm run test:visual:update`).
-- [x] Typecheck/lint/build — aprovados em 2026-10-30 com dependências instaladas (`tsc -b`, `eslint --max-warnings=0`, `vite build`).
+- [x] 12 grupos E2E aprovados novamente em 2026-10-31 — 26 testes (chromium-desktop 1440px + chromium-mobile 390px) verdes via `npx playwright test tests/e2e`.
+- [~] Baselines visuais — Home comparada à visão geral pública e validada manualmente em 390/1440 px; frames detalhados de Home, detalhe, carrinho e checkout ainda dependem do acesso interativo. Fluxo de captura pronto (`npm run test:visual:update`).
+- [x] Revisão visual da Home em 2026-10-31 — typecheck, lint, 12 unitários, build e E2E grupo 1 (desktop+mobile) aprovados; quatro WebP originais entre 77–91 KB.
+- [x] Typecheck/lint/build — aprovados novamente em 2026-10-31 com dependências instaladas (`tsc -b`, `eslint --max-warnings=0`, `vite build`).
 - [x] Lighthouse 3x por página/perfil — executado em 2026-10-30; medianas em `docs/LIGHTHOUSE.md` (A11y/BP/SEO 100; performance 91/100/89/100; CLS ≤ 0,009).
 - [x] Verificação sintática de todos os `.ts/.tsx` — `SYNTAX_CHECK_OK` com TypeScript 6.0.3 do cache local.
 - [x] Relatório final de cobertura — `docs/COVERAGE.md` com execuções, cobertura por camada e lacunas declaradas.
 - [x] Git inicializado por diretório de metadados isolado; primeiro commit e branch `main` publicados no GitHub.
-- [!] Deploy — depende de autorização explícita do usuário.
+- [x] Deploy Railway autorizado e concluído em 2026-10-31 — deployment `8c7aeef9-7b96-417b-9d9d-7c0a8df64fcb` em `SUCCESS`; Home, rotas diretas, MSW e assets validados na URL pública.

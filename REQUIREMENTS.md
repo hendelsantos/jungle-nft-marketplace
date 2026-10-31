@@ -27,9 +27,9 @@ Fonte de verdade: README público do desafio Jungle Gaming, revisado em 2026-10-
 | R21 | Responsividade | layouts em 390, 768 e 1440 px | projetos Playwright + snapshots | Aprovado em E2E nos perfis 390/1440; baseline 768 pendente |
 | R22 | Acessibilidade | semântica, labels, live regions, foco e contraste | E2E grupo 11 + Lighthouse | Aprovado: E2E grupo 11 + Lighthouse A11y 100 nos dois perfis |
 | R23 | Skeleton estável e reduced motion | componente shimmer com dimensões fixas | E2E grupo 12 | Aprovado em E2E (grupo 12); CLS <= 0,009 no Lighthouse |
-| R24 | Regressão visual | Home, detalhe, carrinho e checkout | snapshots versionados | Bloqueado: baselines dependem de inspeção do Figma |
+| R24 | Regressão visual | Home, detalhe, carrinho e checkout | snapshots versionados | Parcial: Home alinhada à visão geral pública e validada em 390/1440; baselines dependem da inspeção frame a frame do Figma |
 | R25 | Performance | budgets, lazy routes/assets e Lighthouse CI | 3 execuções/página/perfil | Aprovado: 3 medições por página/perfil; medianas em docs/LIGHTHOUSE.md |
-| R26 | Deploy público | SPA fallback + mocks em demo | validação pública após autorização | Bloqueado por autorização do proprietário |
+| R26 | Deploy público | SPA fallback + mocks em demo | validação pública após autorização | Aprovado: Railway em `SUCCESS`; Home, rotas diretas, MSW e assets verificados na URL pública |
 
 ## Critérios eliminatórios
 

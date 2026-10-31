@@ -4,8 +4,8 @@
 
 - O diretório de trabalho estava vazio em 2026-10-30 e não continha um repositório Git utilizável. O diretório `.git/` existe vazio e somente leitura nesta sessão; portanto, commits não podem ser criados aqui até o ambiente liberar metadados Git.
 - O README oficial foi lido integralmente no repositório público `junglegaming/frontend-challenge`.
-- O Figma oficial foi solicitado, mas o host de automação do navegador e o acesso de leitura do link não estão disponíveis nesta sessão. Nenhuma medida, cor, fonte ou asset foi inferido como se tivesse sido inspecionado. Até o acesso ser restabelecido, a implementação usa um sistema visual coeso e documenta o desvio.
-- O repositório de destino informado é `https://github.com/hendelsantos/jungle-nft-marketplace.git`. Nenhum push ou deploy será realizado sem autorização explícita.
+- A visão geral pública do Figma oficial foi recuperada em 2026-10-31 e orientou a revisão visual da Home. A inspeção interativa de frames continua indisponível pelo host/CloudFront; medidas finas, fontes e baselines permanecem documentados como pendentes.
+- O repositório de destino informado é `https://github.com/hendelsantos/jungle-nft-marketplace.git`. O deploy no Railway foi autorizado e concluído em 2026-10-31; push de novas alterações continua condicionado à autorização explícita.
 
 ## Objetivo
 
@@ -17,7 +17,7 @@ Entregar as nove telas e os fluxos de descoberta, compra e conta com React, Type
 
 - [x] README oficial revisado.
 - [x] Critérios eliminatórios e matriz de requisitos registrados.
-- [ ] Figma inspecionado em desktop e mobile quando o acesso real estiver disponível.
+- [~] Visão geral do Figma comparada e direção visual da Home alinhada; inspeção frame a frame em desktop e mobile pendente de acesso interativo.
 - [x] Riscos de MSW/Socket.IO, persistência, idempotência, sessão e precisão monetária registrados.
 
 Aceite: `REQUIREMENTS.md`, `ARCHITECTURE.md`, `IMPLEMENTATION_PLAN.md` e `TASKS.md` versionáveis.
@@ -95,5 +95,5 @@ Aceite: grupos 11 e 12 passam; build e preview funcionam; auditorias e limitaç�
 ## Dependências externas e bloqueios atuais
 
 - O ambiente não resolve `registry.npmjs.org` no shell. Os arquivos serão preparados, mas nenhum comando será marcado como aprovado se depender de uma instalação que não ocorreu.
-- A inspeção visual do Figma e a captura de assets aguardam acesso de navegador. A aplicação continua funcional usando assets locais próprios; a fidelidade final precisa de uma rodada posterior de comparação real.
-- Deploy permanece deliberadamente fora de escopo até autorização do proprietário.
+- A visão geral do Figma está acessível, mas a inspeção frame a frame ainda aguarda acesso interativo. A aplicação usa assets locais originais; a fidelidade final precisa de uma rodada posterior de comparação detalhada.
+- Deploy concluído no Railway após autorização do proprietário, com validação pública de rotas diretas, mocks e assets.

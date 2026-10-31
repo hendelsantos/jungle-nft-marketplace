@@ -2,18 +2,18 @@ import type { Nft } from '@/api/contracts'
 import Decimal from 'decimal.js'
 
 const specs = [
-  ['jungle-ape', 'Jungle Ape Genesis', 'Genesis', 'Maya Ito', '#b7ff3c', '0.84'],
-  ['neon-tiger', 'Neon Tiger #08', 'Wild Circuit', 'Koa Studio', '#8b5cf6', '1.25'],
-  ['cyber-frog', 'Cyber Frog Prime', 'Metamorphs', 'Nori Labs', '#22d3ee', '0.42'],
-  ['obsidian-owl', 'Obsidian Owl', 'Night Keepers', 'Ari Vale', '#f472b6', '2.1'],
-  ['solar-serpent', 'Solar Serpent', 'Wild Circuit', 'Koa Studio', '#fb923c', '0.68'],
-  ['pixel-panther', 'Pixel Panther', 'Genesis', 'Maya Ito', '#eab308', '0.93'],
-  ['void-gecko', 'Void Gecko', 'Metamorphs', 'Nori Labs', '#a78bfa', '0.31'],
-  ['forest-mech', 'Forest Mech', 'Mecha Flora', 'Feral Works', '#34d399', '1.72'],
-  ['magma-moth', 'Magma Moth', 'Night Keepers', 'Ari Vale', '#f87171', '0.56'],
-  ['lotus-bot', 'Lotus Bot', 'Mecha Flora', 'Feral Works', '#2dd4bf', '1.08'],
-  ['prism-parrot', 'Prism Parrot', 'Genesis', 'Maya Ito', '#60a5fa', '0.77'],
-  ['ancient-ibis', 'Ancient Ibis', 'Night Keepers', 'Ari Vale', '#c084fc', '1.44'],
+  ['jungle-ape', 'Jungle Ape Genesis', 'Genesis', 'Maya Ito', '#dc8248', '0.84'],
+  ['neon-tiger', 'Neon Tiger #08', 'Wild Circuit', 'Koa Studio', '#d6a65a', '1.25'],
+  ['cyber-frog', 'Cyber Frog Prime', 'Metamorphs', 'Nori Labs', '#797b51', '0.42'],
+  ['obsidian-owl', 'Obsidian Owl', 'Night Keepers', 'Ari Vale', '#835a55', '2.1'],
+  ['solar-serpent', 'Solar Serpent', 'Wild Circuit', 'Koa Studio', '#b9653f', '0.68'],
+  ['pixel-panther', 'Pixel Panther', 'Genesis', 'Maya Ito', '#c99851', '0.93'],
+  ['void-gecko', 'Void Gecko', 'Metamorphs', 'Nori Labs', '#776052', '0.31'],
+  ['forest-mech', 'Forest Mech', 'Mecha Flora', 'Feral Works', '#657153', '1.72'],
+  ['magma-moth', 'Magma Moth', 'Night Keepers', 'Ari Vale', '#ad5d45', '0.56'],
+  ['lotus-bot', 'Lotus Bot', 'Mecha Flora', 'Feral Works', '#8c7454', '1.08'],
+  ['prism-parrot', 'Prism Parrot', 'Genesis', 'Maya Ito', '#9e755c', '0.77'],
+  ['ancient-ibis', 'Ancient Ibis', 'Night Keepers', 'Ari Vale', '#72564c', '1.44'],
 ] as const
 
 export const nftFixtures: Nft[] = specs.map(([slug, name, collection, creator, accent, price], index) => ({
@@ -23,7 +23,7 @@ export const nftFixtures: Nft[] = specs.map(([slug, name, collection, creator, a
   description: `${name} é uma peça colecionável da coleção ${collection}, criada para exploradores do ecossistema Jungle.`,
   collection,
   creator,
-  imageUrl: `/assets/nft-${(index % 4) + 1}.svg`,
+  imageUrl: `/assets/ape-${(['emerald', 'golden', 'ivory', 'sage'] as const)[index % 4]}.webp`,
   accent,
   featured: index < 3,
   version: 1,

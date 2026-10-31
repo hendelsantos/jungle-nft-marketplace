@@ -21,8 +21,8 @@ export function AppHeader() {
       <a href="#main-content" className="absolute left-3 top-3 -translate-y-20 rounded-md bg-accent px-4 py-2 font-bold text-canvas focus:translate-y-0">Pular para o conteúdo</a>
       <div className="page-shell flex min-h-20 items-center gap-4">
         <Link to="/" className="mr-auto flex items-center gap-2" aria-label="Jungle, início">
-          <span className="grid size-10 place-items-center rounded-xl bg-accent text-xl font-black text-canvas">J</span>
-          <span className="text-lg font-black tracking-tight">JUNGLE<span className="text-accent">.</span></span>
+          <span className="grid size-9 place-items-center rounded-md border border-accent/50 bg-accent/10 text-lg font-black text-accent">J</span>
+          <span className="text-base font-black tracking-[0.14em]">JUNGLE<span className="text-accent">.</span></span>
         </Link>
         <nav aria-label="Principal" className="hidden items-center gap-1 lg:flex">
           {nav.map((item) => <Link key={item.to} to={item.to} className="rounded-full px-4 py-2 text-sm font-semibold text-muted transition hover:bg-white/5 hover:text-ink" activeProps={{ className: 'text-ink bg-white/5' }}>{item.label}</Link>)}

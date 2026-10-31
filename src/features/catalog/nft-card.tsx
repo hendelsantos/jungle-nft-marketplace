@@ -17,7 +17,7 @@ export function NftCard({ nft }: { nft: Nft }) {
   const lowest = Decimal.min(...nft.editions.map((edition) => edition.priceEth)).toString()
   return (
     <article className="group surface overflow-hidden transition hover:-translate-y-1 hover:border-accent/40">
-      <div className="relative aspect-[4/4.6] overflow-hidden bg-panel-raised">
+      <div className="relative aspect-square overflow-hidden bg-panel-raised">
         <Link to="/nfts/$nftId" params={{ nftId: nft.id }} aria-label={`Ver ${nft.name}`}><img src={nft.imageUrl} alt={`Arte de ${nft.name}`} width="800" height="900" loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" /></Link>
         <span className={cn('absolute left-3 top-3 rounded-full border bg-canvas/85 px-3 py-1 text-xs font-bold backdrop-blur', available ? 'text-accent' : 'text-muted')}>{available ? 'Disponível' : 'Esgotado'}</span>
         <Button size="icon" variant="secondary" className="absolute right-3 top-3 bg-canvas/85" aria-label={active ? `Remover ${nft.name} dos favoritos` : `Adicionar ${nft.name} aos favoritos`} aria-pressed={active} disabled={!session || toggle.isPending} onClick={() => toggle.mutate({ nftId: nft.id, active })} title={session ? undefined : 'Entre para favoritar'}><Heart className={cn('size-5', active && 'fill-red-400 text-red-400')} /></Button>

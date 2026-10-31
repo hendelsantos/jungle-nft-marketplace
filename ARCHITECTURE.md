@@ -69,9 +69,11 @@ Autenticação, carteiras e transações são inteiramente simuladas. Não há c
 
 HTML semântico, skip link, foco visível, labels/descrições, `aria-live` para mutations/realtime e foco gerenciado em diálogos. Skeletons são ocultos de tecnologia assistiva e preservam dimensões. Animações respeitam `prefers-reduced-motion`.
 
-## Sistema visual temporário e Figma
+## Sistema visual e Figma
 
-A inspeção do Figma não foi possível nesta sessão. O sistema provisório usa fundo grafite profundo, superfícies elevadas, roxo elétrico e verde-limão como acentos, tipografia sans local/system e imagens SVG locais. Isso é deliberadamente marcado como provisório: cores, fontes, espaçamentos e assets devem ser comparados e ajustados depois que o arquivo oficial puder ser inspecionado.
+A visão geral pública do Figma oficial foi recuperada em 2026-10-31 e usada para corrigir a direção visual da Home: fundo preto amarronzado, superfícies espresso, acento laranja queimado, tipografia sans local/system, hero dividido e retratos de macacos em enquadramento consistente. Os quatro retratos WebP são assets originais gerados para esta entrega e otimizados para 77–91 KB; não são exportações do Figma nem arquivos de soluções de terceiros.
+
+O host de automação e o CloudFront ainda impedem abrir e inspecionar cada frame do arquivo. Por isso, medidas finas, fontes e baselines das quatro telas visuais continuam pendentes; a implementação não declara fidelidade pixel-perfect enquanto essa comparação detalhada não ocorrer.
 
 ## Riscos e mitigação
 
@@ -84,8 +86,8 @@ A inspeção do Figma não foi possível nesta sessão. O sistema provisório us
 | merge visitante/autenticado duplicar | operação idempotente no mock por anonymous cart ID |
 | float alterar ETH | `decimal.js` e strings nos limites |
 | dados de usuário anterior | ownership no handler, chaves por usuário e limpeza no logout |
-| layout não fiel ao Figma | não alegar fidelidade; rodada visual bloqueada registrada |
+| divergência fina em relação ao Figma | direção visual alinhada à visão geral; não alegar fidelidade pixel-perfect até inspecionar frames e aprovar baselines |
 
 ## Deploy
 
-O build é estático e requer fallback de SPA para `index.html`. `VITE_ENABLE_MOCKS=true` ativa MSW no build de demonstração. Nenhum serviço privado é necessário. O deploy só será realizado após autorização explícita.
+O build é estático e requer fallback de SPA para `index.html`. `VITE_ENABLE_MOCKS=true` ativa MSW no build de demonstração. Nenhum serviço privado é necessário. O deploy autorizado usa Railway Railpack/Caddy e foi validado com acesso direto às rotas da SPA.

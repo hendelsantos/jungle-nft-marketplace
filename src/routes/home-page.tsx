@@ -58,10 +58,18 @@ export function HomePage() {
   return (
     <div>
       <section className="page-shell pt-6 sm:pt-10">
-        <div className="relative overflow-hidden rounded-[1.75rem] border bg-panel px-6 py-14 sm:px-12 sm:py-20 lg:px-20">
-          <div className="pointer-events-none absolute -right-24 -top-32 size-[32rem] rounded-full bg-violet/30 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-48 right-1/4 size-96 rounded-full bg-accent/10 blur-3xl" />
-          <div className="relative max-w-3xl"><p className="eyebrow flex items-center gap-2"><Sparkles className="size-4" /> Colecionáveis que vivem além do jogo</p><h1 className="mt-5 text-4xl font-black leading-[0.98] tracking-[-0.04em] sm:text-6xl lg:text-7xl">Descubra o lado <span className="text-accent">selvagem</span> do digital.</h1><p className="mt-6 max-w-xl text-base leading-7 text-muted sm:text-lg">Explore edições únicas, acompanhe preços ao vivo e monte sua coleção em uma experiência totalmente simulada e segura.</p><a href="#catalog" className="mt-8 inline-flex min-h-12 items-center gap-2 rounded-full bg-accent px-6 font-bold text-canvas">Explorar coleção <ArrowRight className="size-4" /></a></div>
+        <div className="relative grid overflow-hidden rounded-[1.25rem] border bg-panel lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="pointer-events-none absolute -left-28 -top-40 size-96 rounded-full bg-copper/35 blur-3xl" />
+          <div className="relative z-10 flex flex-col justify-center px-6 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
+            <p className="eyebrow flex items-center gap-2"><Sparkles className="size-4" /> Colecionáveis que vivem além do jogo</p>
+            <h1 className="mt-5 max-w-2xl text-4xl font-black leading-[0.98] tracking-[-0.04em] sm:text-6xl lg:text-[4.25rem]">Descubra o lado <span className="text-accent">selvagem</span> do digital.</h1>
+            <p className="mt-6 max-w-xl text-base leading-7 text-muted sm:text-lg">Explore edições únicas, acompanhe preços ao vivo e monte sua coleção em uma experiência totalmente simulada e segura.</p>
+            <a href="#catalog" className="mt-8 inline-flex min-h-12 w-fit items-center gap-2 rounded-md bg-accent px-6 font-bold text-canvas transition hover:bg-[#eb9862]">Explorar coleção <ArrowRight className="size-4" /></a>
+          </div>
+          <div className="relative min-h-80 overflow-hidden border-t border-line bg-[#ead9be] lg:min-h-[34rem] lg:border-l lg:border-t-0">
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-canvas/25 via-transparent to-white/10" />
+            <img src="/assets/ape-emerald.webp" alt="Macaco colecionável com óculos verdes e jaqueta varsity" width="900" height="900" fetchPriority="high" className="h-full w-full object-cover object-center" />
+          </div>
         </div>
       </section>
 
@@ -78,7 +86,7 @@ export function HomePage() {
           {priceError ? <div id="price-range-error" className="sm:col-span-2 xl:col-span-8"><InlineMessage tone="error">{priceError}</InlineMessage></div> : null}
         </form>
 
-        {query.isLoading ? <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Carregando NFTs">{Array.from({ length: 6 }, (_, index) => <div className="surface overflow-hidden" key={index}><Skeleton className="aspect-[4/4.6] rounded-none" /><div className="space-y-3 p-5"><Skeleton className="h-3 w-24" /><Skeleton className="h-6 w-3/4" /><Skeleton className="mt-6 h-5 w-28" /></div></div>)}</div> : null}
+        {query.isLoading ? <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Carregando NFTs">{Array.from({ length: 6 }, (_, index) => <div className="surface overflow-hidden" key={index}><Skeleton className="aspect-square rounded-none" /><div className="space-y-3 p-5"><Skeleton className="h-3 w-24" /><Skeleton className="h-6 w-3/4" /><Skeleton className="mt-6 h-5 w-28" /></div></div>)}</div> : null}
         {query.isError ? <ErrorState message={query.error.message} onRetry={() => void query.refetch()} /> : null}
         {query.data && query.data.items.length ? <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">{query.data.items.map((nft) => <NftCard key={nft.id} nft={nft} />)}</div> : null}
         {query.data && !query.data.items.length ? <div className="surface grid min-h-64 place-items-center p-8 text-center"><div><Search className="mx-auto mb-4 size-9 text-muted" /><h3 className="text-xl font-bold">Nada encontrado</h3><p className="mt-2 text-muted">Tente uma busca mais ampla ou limpe os filtros.</p><Button className="mt-5" onClick={() => void navigate({ search: {} })}>Limpar filtros</Button></div></div> : null}

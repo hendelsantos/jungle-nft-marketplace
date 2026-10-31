@@ -13,7 +13,7 @@ SPA profissional para o desafio frontend da Jungle Gaming. A aplicação impleme
 | Vite | 8.3.2 |
 | Vite React plugin | 6.1.2 |
 | TanStack Router | 1.154.7 |
-| TanStack Query | 5.101.4 |
+| TanStack Query | 5.105.0 |
 | Axios | 1.15.2 |
 | Tailwind CSS | 4.3.3 |
 | MSW | 2.13.4 |
@@ -124,11 +124,15 @@ TanStack Query usa chaves por identidade, parâmetros estáveis, cancelamento co
 
 O projeto gera uma SPA estática em `dist/`. `vercel.json` configura fallback de rotas diretas. O build demonstrativo não depende de serviço privado e mantém MSW e Socket.IO simulados ativos.
 
-O código-fonte é versionado na branch `main`. As validações de `npm run build`, Playwright (12 grupos E2E) e Lighthouse (3 medições por página/perfil, medianas em `docs/LIGHTHOUSE.md`) foram concluídas. Deploy público continua condicionado à autorização do proprietário.
+Deploy público: [jungle-nft-marketplace-production.up.railway.app](https://jungle-nft-marketplace-production.up.railway.app)
+
+O Railway usa Railpack/Caddy para servir `dist/` com fallback de SPA. Em 2026-10-31, Home, `/cart`, `/nfts/nft_1`, `mockServiceWorker.js` e os assets WebP foram validados na URL pública; o Chromium confirmou a rota direta e o MSW ativo.
+
+O código-fonte é versionado na branch `main`. As validações de `npm run build`, Playwright (12 grupos E2E) e Lighthouse (3 medições por página/perfil, medianas em `docs/LIGHTHOUSE.md`) foram concluídas.
 
 ## Limitações conhecidas desta sessão
 
-- O arquivo Figma oficial não pôde ser aberto: o host de automação do navegador estava indisponível e a leitura pública do link falhou. O sistema visual atual é provisório e não é apresentado como inspeção fiel do Figma.
-- Instalação de dependências concluída em 2026-10-30 com `npm install --legacy-peer-deps` (o npm 10.8 falha com `Cannot read properties of null (reading 'edgesOut')` nesta árvore de dependências). Typecheck estrito, lint com zero avisos, testes unitários, build Vite 8, os 12 grupos E2E (26 testes em desktop e mobile) e três medições Lighthouse por página/perfil (`docs/LIGHTHOUSE.md`) foram aprovados no mesmo ambiente.
+- A visão geral pública do [Figma oficial](https://www.figma.com/design/Ff0SksUi7UFtPWUO8kyNtw/Frontend-Challenge?node-id=0-1) foi recuperada em 2026-10-31 e orientou a revisão marrom/laranja da Home e os retratos originais otimizados. O host/CloudFront ainda bloqueia a inspeção interativa de cada frame; portanto, medidas finas e baselines não são apresentados como pixel-perfect.
+- Instalação de dependências concluída em 2026-10-30 com `npm install --legacy-peer-deps` (o npm 10.8 falha com `Cannot read properties of null (reading 'edgesOut')` nesta árvore de dependências). Typecheck estrito, lint com zero avisos, testes unitários, build Vite 8 e os 12 grupos E2E (26 testes em desktop e mobile) foram aprovados novamente em 2026-10-31; as três medições Lighthouse por página/perfil permanecem registradas em `docs/LIGHTHOUSE.md`.
 - O diretório `.git/` fornecido pelo ambiente de automação estava vazio e somente leitura; os metadados Git foram mantidos em diretório isolado, com commit e push reais verificados na branch `main`.
 - Baselines visuais e relatórios de auditoria só devem ser adicionados depois de execução real; arquivos falsos não foram criados.
